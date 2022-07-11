@@ -1,5 +1,4 @@
 def main():
-    print()
     print("Printing board...")
     game_board = [['-', '-', '-'],
                   ['-', '-', '-'],
@@ -10,62 +9,77 @@ def main():
     current = game_board
     while True:
         # Player 1
-        player = 1
+        player1(game_board, current)
+        # Player 2
+        player2(game_board, current)
+
+
+def player1(game_board, current):
+    player = 1
+    print("Player 1, make your move")
+    row = int(input("Enter row nos (0-2): "))
+    col = int(input("Enter col nos (0-2): "))
+
+    # row and col validation
+    while row < 0 or row >= 3 or col < 0 or col >= 3:
+        print("**** Invalid row or column. Please select row / col between values 0 to 2 ****")
+        print_board(current)
+        print()
         print("Player 1, make your move")
         row = int(input("Enter row nos (0-2): "))
         col = int(input("Enter col nos (0-2): "))
 
-        while row < 0 or row >= 3 or col < 0 or col >= 3:
-            print("**** Invalid row or column. Please select row / col between values 0 to 2 ****")
-            print_board(current)
-            print()
-            print("Player 1, make your move")
-            row = int(input("Enter row nos (0-2): "))
-            col = int(input("Enter col nos (0-2): "))
-        taken = check_existing(row, col, game_board)
-        while taken:
-            print(f"**** Board [{row}][{col}] has already been selected. Please somewhere else on the board ****")
-            print("**** Invalid choice. Please mark again! ****")
-            print_board(current)
-            print()
-            print("Player 1, make your move")
-            row = int(input("Enter row nos (0-2): "))
-            col = int(input("Enter col nos (0-2): "))
-            taken = check_existing(row, col, game_board)
-        print()
-        print(f"Player 1 added mark at the location {row}, {col}")
-        current = board_changes(player, row, col, game_board)
+    taken = check_existing(row, col, game_board)
+
+    while taken:
+        print(f"**** Board [{row}][{col}] has already been selected. Please somewhere else on the board ****")
+        print("**** Invalid choice. Please mark again! ****")
         print_board(current)
         print()
+        print("Player 1, make your move")
+        row = int(input("Enter row nos (0-2): "))
+        col = int(input("Enter col nos (0-2): "))
+        taken = check_existing(row, col, game_board)
 
-        # Player 2
-        player = 2
+    print()
+    print(f"Player 1 added mark at the location {row}, {col}")
+    current = board_changes(player, row, col, game_board)
+    print_board(current)
+    print()
+
+
+def player2(game_board, current):
+    player = 2
+    print("Player 2, make your move")
+    row = int(input("Enter row nos (0-2): "))
+    col = int(input("Enter col nos (0-2): "))
+
+    # row and col validation
+    while row < 0 or row >= 3 or col < 0 or col >= 3:
+        print("**** Invalid row or column. Please select row / col between values 0 to 2 ****")
+        print_board(current)
+        print()
         print("Player 2, make your move")
         row = int(input("Enter row nos (0-2): "))
         col = int(input("Enter col nos (0-2): "))
 
-        while row < 0 or row >= 3 or col < 0 or col >= 3:
-            print("**** Invalid row or column. Please select row / col between values 0 to 2 ****")
-            print_board(current)
-            print()
-            print("Player 2, make your move")
-            row = int(input("Enter row nos (0-2): "))
-            col = int(input("Enter col nos (0-2): "))
-        taken = check_existing(row, col, game_board)
-        while taken:
-            print(f"**** Board [{row}][{col}] has already been selected. Please somewhere else on the board ****")
-            print("**** Invalid choice. Please mark again! ****")
-            print_board(current)
-            print()
-            print("Player 2, make your move")
-            row = int(input("Enter row nos (0-2): "))
-            col = int(input("Enter col nos (0-2): "))
-            taken = check_existing(row, col, game_board)
-        print()
-        print(f"Player 2 added mark at the location {row}, {col}")
-        current = board_changes(player, row, col, game_board)
+    taken = check_existing(row, col, game_board)
+
+    while taken:
+        print(f"**** Board [{row}][{col}] has already been selected. Please somewhere else on the board ****")
+        print("**** Invalid choice. Please mark again! ****")
         print_board(current)
         print()
+        print("Player 2, make your move")
+        row = int(input("Enter row nos (0-2): "))
+        col = int(input("Enter col nos (0-2): "))
+        taken = check_existing(row, col, game_board)
+
+    print()
+    print(f"Player 2 added mark at the location {row}, {col}")
+    current = board_changes(player, row, col, game_board)
+    print_board(current)
+    print()
 
 
 def check_existing(r, c, b):
@@ -92,37 +106,50 @@ def print_board(b):
 
 
 def winner(board):
-    # horizontal
+    # Checking Horizontal
     if board[0][0] == 'X' and board[0][1] == 'X' and board[0][2] == 'X' or board[1][0] == 'X' and board[1][1] == 'X' and \
             board[1][2] == 'X' or board[2][0] == 'X' and board[2][1] == 'X' and board[2][2] == 'X':
+        print_board(board)
         print("Player 1 wins!")
         exit()
 
-    elif board[0][0] == '0' and board[0][1] == '0' and board[0][2] == '0' or board[1][0] == '0' and board[1][
-        1] == '0' and board[1][2] == '0' or board[2][0] == '0' and board[2][1] == '0' and board[2][2] == '0':
+    elif board[0][0] == 'O' and board[0][1] == 'O' and board[0][2] == 'O' or board[1][0] == 'O' and board[1][
+        1] == 'O' and board[1][2] == 'O' or board[2][0] == 'O' and board[2][1] == 'O' and board[2][2] == 'O':
+        print_board(board)
         print("Player 2 wins!")
         exit()
 
-    # Vertical
+    # Checking Vertical
     elif board[0][0] == 'X' and board[1][0] == 'X' and board[2][0] == 'X' or board[0][1] == 'X' and board[1][
         1] == 'X' and board[2][1] == 'X' or board[0][2] == 'X' and board[1][2] == 'X' and board[2][2] == 'X':
+        print_board(board)
         print("Player 1 wins!")
         exit()
 
-    elif board[0][0] == '0' and board[1][0] == '0' and board[2][0] == '0' or board[0][1] == '0' and board[1][
-        1] == '0' and board[2][1] == '0' or board[0][2] == '0' and board[1][2] == '0' and board[2][2] == '0':
+    elif board[0][0] == 'O' and board[1][0] == 'O' and board[2][0] == 'O' or board[0][1] == 'O' and board[1][
+        1] == 'O' and board[2][1] == 'O' or board[0][2] == 'O' and board[1][2] == 'O' and board[2][2] == 'O':
+        print_board(board)
         print("Player 2 wins!")
         exit()
 
-    # Diagonal
+    # Checking Diagonal
     elif board[0][0] == 'X' and board[1][1] == 'X' and board[2][2] == 'X' or board[0][2] == 'X' and board[1][
         1] == 'X' and board[2][0] == 'X':
+        print_board(board)
         print("Player 1 wins!")
         exit()
 
-    elif board[0][0] == '0' and board[1][1] == '0' and board[2][2] == '0' or board[0][2] == '0' and board[1][
-        1] == '0' and board[2][0] == '0':
+    elif board[0][0] == 'O' and board[1][1] == 'O' and board[2][2] == 'O' or board[0][2] == 'O' and board[1][
+        1] == 'O' and board[2][0] == 'O':
+        print_board(board)
         print("Player 2 wins!")
+        exit()
+
+    # Nobody wins
+    elif board[0][0] != '-' and board[0][1] != '-' and board[0][2] != '-' and board[1][0] != '-' and board[1][
+        1] != '-' and board[1][2] != '-' and board[2][0] != '-' and board[2][1] != '-' and board[2][2] != '-':
+        print_board(board)
+        print("Nobody wins!")
         exit()
 
 
